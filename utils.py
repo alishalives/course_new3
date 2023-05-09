@@ -36,6 +36,7 @@ def state_sorted_data(data, value):
     :return: Отсортированный по значению список словарей
     """
     key_list = []
+
     for string in data:
         if string["state"] == value:
             key_list.append(string)
@@ -58,7 +59,7 @@ def card_with_code(card):
                          card.replace("-", "** **** **** ")])
     elif len(split_card) == 2:
         return " ".join(
-            {split_card[len(split_card) - 2], card.replace("-", "** **** **** ")})
+            [split_card[len(split_card) - 2], card.replace("-", "** **** **** ")])
     else:
         return card.replace("-", "** **** **** ")
 
@@ -90,10 +91,9 @@ def output(data):
     :return: данные для вывода последних 5 операций клиента в соответствующем формате
     """
     output_data = []
-    # Десериализация json-файла
-    load_data = load_json(data)
+    data = load_json(data)
     # Сортировка элементов списка по дате
-    sorted_data = time_sorted_data(load_data)
+    sorted_data = time_sorted_data(data)
     # Сортировка элементов списка по статусу
     result_data = state_sorted_data(sorted_data, "EXECUTED")
 
@@ -111,4 +111,5 @@ def output(data):
     return output_data[:5]
 
 
+print(output("operations.json"))
 
